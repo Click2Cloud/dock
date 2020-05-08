@@ -36,6 +36,7 @@ const (
 	FujitsuEternusDriverType       = "fujitsu_eternus"
 	ChubaofsDriverType             = "chubaofs"
 	NetappOntapSanDriverType       = "netapp_ontap_san"
+	NetappEseriresSanDriverType    = "netapp_eseries_san"
 )
 
 const (

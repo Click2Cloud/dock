@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/LINBIT/godrbdutils v0.0.0-20180425110027-65b98a0f103a
-	github.com/RoaringBitmap/roaring v0.4.21 // indirect
+	github.com/RoaringBitmap/roaring v0.4.21
 	github.com/appleboy/easyssh-proxy v1.2.0
 	github.com/astaxie/beego v1.12.0
 	github.com/beorn7/perks v1.0.0 // indirect
@@ -23,6 +23,7 @@ require (
 	github.com/golang/protobuf v1.3.5
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/go-cmp v0.3.1 // indirect
+	github.com/google/uuid v1.1.1
 	github.com/gophercloud/gophercloud v0.0.0-20190528082055-3ad89c4ea008
 	github.com/gorilla/websocket v1.4.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0 // indirect
@@ -37,7 +38,9 @@ require (
 	github.com/prometheus/common v0.3.0 // indirect
 	github.com/prometheus/procfs v0.0.0-20190425082905-87a4384529e0 // indirect
 	github.com/satori/go.uuid v1.2.0
+	github.com/sirupsen/logrus v1.4.2
 	github.com/smartystreets/goconvey v1.6.4 // indirect
+	github.com/sodafoundation/api v0.12.0 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/spf13/cobra v0.0.3
 	github.com/stretchr/testify v1.4.0

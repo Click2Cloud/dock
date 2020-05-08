@@ -29,6 +29,7 @@ import (
 	"github.com/sodafoundation/dock/contrib/drivers/huawei/oceanstor"
 	"github.com/sodafoundation/dock/contrib/drivers/ibm/spectrumscale"
 	"github.com/sodafoundation/dock/contrib/drivers/lvm"
+	"github.com/sodafoundation/dock/contrib/drivers/netapp/eseries"
 	"github.com/sodafoundation/dock/contrib/drivers/netapp/ontap"
 	"github.com/sodafoundation/dock/contrib/drivers/openstack/cinder"
 	"github.com/sodafoundation/dock/contrib/drivers/utils/config"
@@ -114,6 +115,9 @@ func Init(resourceType string) VolumeDriver {
 	case config.NetappOntapSanDriverType:
 		d = &ontap.SANDriver{}
 		break
+	case config.NetappEseriresSanDriverType:
+		d = &ontap.SANDriver{}
+		break
 	default:
 		d = &sample.Driver{}
 		break
@@ -143,6 +147,8 @@ func Clean(d VolumeDriver) VolumeDriver {
 	case *eternus.Driver:
 		break
 	case *ontap.SANDriver:
+		break
+	case *eseries.SANDriverE:
 		break
 	default:
 		break

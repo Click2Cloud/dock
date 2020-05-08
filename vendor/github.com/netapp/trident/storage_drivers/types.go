@@ -57,7 +57,14 @@ type ESeriesStorageDriverConfig struct {
 	HostType             string `json:"hostType"`              // host type, default is 'linux_dm_mp'
 
 	EseriesStorageDriverPool
-	Storage []EseriesStorageDriverPool `json:"storage"`
+	Storage           []EseriesStorageDriverPool `json:"storage"`
+	Protocol          string                     `json:"protocol"`
+	StorageDriverName string                     `json:"storageDriveName"`
+	ConfigVersion     string                     `json:"configVersion"`
+	//DebugTraceFlags   int                        `json:"debugTraceFlags"`
+
+	//DriverName        interface{}
+	//StorageDriverName interface{}
 }
 
 type EseriesStorageDriverPool struct {
