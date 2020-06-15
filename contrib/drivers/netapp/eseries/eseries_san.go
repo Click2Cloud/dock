@@ -121,11 +121,10 @@ func (d *SANDriverE) Setup() error {
 		PasswordArray:         d.conf.PasswordArray,
 		PoolNameSearchPattern: d.conf.PoolNameSearchPattern,
 		HostDataIP:            d.conf.HostDataIP,
-		Protocol:              d.Protocol(),
+
 		AccessGroup:           d.conf.AccessGroup,
 		HostType:              d.conf.HostType,
-		StorageDriverName:     d.conf.DriverName,
-		ConfigVersion:         d.conf.ConfigVersion,
+
 	}
 	marshaledJSON, err := json.Marshal(config)
 	if err != nil {
@@ -207,14 +206,7 @@ func (d *SANDriverE) createVolumeFromSnapshot(opt *pb.CreateVolumeOpts) (*model.
 	volConfig.CloneSourceVolumeInternal = volName
 	volConfig.CloneSourceSnapshot = volName
 	volConfig.CloneSourceSnapshot = snapName
-	storagePool := &storage.Pool{
-		Name:               opt.GetPoolName(),
-		StorageClasses:     make([]string, 0),
-		Attributes:         make(map[string]sa.Offer),
-		InternalAttributes: make(map[string]string),
-	}
-
-	err := d.sanStorageDriver.CreateClone(volConfig, storagePool)
+	err := d.sanStorageDriver.CreateClone(volConfig)
 	if err != nil {
 		log.Errorf("create volume (%s) from snapshot (%s) failed: %v", opt.GetId(), opt.GetSnapshotId(), err)
 		return nil, err
