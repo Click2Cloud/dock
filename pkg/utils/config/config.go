@@ -277,8 +277,18 @@ func GetConfigPath() string {
 func (c *Config) Load() {
 	var dummyConfigPath string
 	// Flag 'config-file' is set here for usage show and parameter check, the config path will be parsed by GetConfigPath
-	flag.StringVar(&dummyConfigPath, "config-file", constants.OpensdsConfigPath, "OpenSDS config file path")
+
+	flafd := isFlagPassed("config-file")
+	if !flafd {
+		flag.StringVar(&dummyConfigPath, "config-file", constants.OpensdsConfigPath, "OpenSDS config file path")
+	}
+
 	initConf(GetConfigPath(), CONF)
+}
+
+func isFlagPassed(name string) bool {
+	rs := flag.Lookup(name)
+	return rs != nil
 }
 
 func GetBackendsMap() map[string]BackendProperties {

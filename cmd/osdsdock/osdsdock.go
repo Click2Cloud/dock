@@ -21,6 +21,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/sodafoundation/dock/pkg/dock"
 	"github.com/sodafoundation/dock/pkg/model"
 	"github.com/sodafoundation/dock/pkg/utils/constants"
@@ -29,6 +30,7 @@ import (
 	. "github.com/sodafoundation/dock/pkg/utils/config"
 	"github.com/sodafoundation/dock/pkg/utils/daemon"
 	"github.com/sodafoundation/dock/pkg/utils/logs"
+	"gopkg.in/robfig/cron.v2"
 )
 
 func init() {
@@ -61,6 +63,15 @@ func main() {
 	}
 	// Construct dock module grpc server struct and run dock server process.
 	ds := dock.NewDockServer(CONF.OsdsDock.DockType, listenEndpoint)
+	c := cron.New()
+	c.AddFunc("* * * * *", func() {
+		CONF.Load()
+		ds := dock.NewDockServer(CONF.OsdsDock.DockType, listenEndpoint)
+		ds.Rediscovery()
+		fmt.Println("Every minute")
+	})
+	c.Start()
+
 	if err := ds.Run(); err != nil {
 		panic(err)
 	}

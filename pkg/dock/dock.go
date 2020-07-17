@@ -115,6 +115,45 @@ func (ds *dockServer) Run() error {
 	defer s.Stop()
 	return s.Serve(lis)
 }
+func (ds *dockServer) Rediscovery() {
+	// New Grpc Server
+	//s := grpc.NewServer()
+	// Register dock service.
+	//pb.RegisterProvisionDockServer(s, ds)
+	//pb.RegisterAttachDockServer(s, ds)
+	//pb.RegisterFileShareDockServer(s, ds)
+
+	// Trigger the discovery and report loop so that the dock service would
+	// update the capabilities from backends automatically.
+	if err := func() error {
+		var err error
+		if err = ds.Discoverer.Init(); err != nil {
+			return err
+		}
+		ctx := &discovery.Context{
+			StopChan: make(chan bool),
+			ErrChan:  make(chan error),
+			MetaChan: make(chan string),
+		}
+		go discovery.DiscoveryAndReport(ds.Discoverer, ctx)
+		go func(ctx *discovery.Context) {
+			if err = <-ctx.ErrChan; err != nil {
+				log.Error("when calling capabilty report method:", err)
+				ctx.StopChan <- true
+			}
+		}(ctx)
+		return err
+	}(); err != nil {
+		println(err)
+		return
+	}
+
+	// Listen the dock server port.
+
+	// Start dock server watching loop.
+	//defer s.Stop()
+	//return s.Serve(lis)
+}
 
 // CreateVolume implements pb.DockServer.CreateVolume
 func (ds *dockServer) CreateVolume(ctx context.Context, opt *pb.CreateVolumeOpts) (*pb.GenericResponse, error) {
